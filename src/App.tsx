@@ -1,15 +1,28 @@
 import * as React from "react";
 
-import { Lovers } from './components/lovers/Lovers';
-import { LoversName } from './components/LoversName';
+import { FormName } from './components/lovers/FormName';
+import { PickEmojis } from "./components/emojis/PickEmojis";
 
-export class App extends React.Component {
-    render() {
-        return (
-          <div>
-          <LoversName />
-          <Lovers message="teste" />
-          </div>
-        );
+type Props = {
+  userData: any;
+  handleSubmit: (e: React.SyntheticEvent) => void;
+}
+
+export class App extends React.Component<Props, object> {
+  
+  frames(f: number) {
+    switch(f) {
+      case 1: // pick emojis frame
+        return <PickEmojis />;
+      default:
+        return <FormName handleSubmit={this.props.handleSubmit} />;
     }
+  }
+
+
+  render() {
+    const configs = this.props.userData.configs;
+
+    return this.frames(configs.frame)
+  }
 }
