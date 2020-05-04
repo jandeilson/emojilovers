@@ -1,14 +1,15 @@
 import * as React from "react";
 import { App } from "./App";
 
-
 type States = {
     data: {
-        lovers: {
+        lovers?: {
             one: string;
             two: string;
         }
-        emojis?: object;
+        emojis?: {
+            ids: any[];
+        };
     },
     configs: {
         frame?: number;
@@ -17,7 +18,7 @@ type States = {
             error?: any
         }
     }
-    emojis: []
+    emojis: any[]
 };
 
 export class AppController extends React.Component<object, States> {
@@ -61,7 +62,7 @@ export class AppController extends React.Component<object, States> {
           )
     }
 
-    handleSubmit = (e: React.SyntheticEvent) => {
+    formSubmit = (e: React.SyntheticEvent) => {
         e.preventDefault();
   
         const target = e.target as typeof e.target & {
@@ -81,11 +82,36 @@ export class AppController extends React.Component<object, States> {
             }
         });
     };
+
+    pickEmojis = (e: React.SyntheticEvent) => {
+        e.preventDefault();
+
+        const id: string | null = e.currentTarget.getAttribute('data-id');
+
+        let emojiId;
+
+        if (id !== null) 
+        emojiId = parseInt(id);
+        
+        const userEmojis: any[] | undefined = this.state.data.emojis?.ids;
+
+        if (userEmojis !== undefined && userEmojis.includes(emojiId)) 
+        return
+
+        this.setState({
+            data: {
+                emojis: {
+                    ids: [...userEmojis || [], emojiId]
+                }
+            }
+        });
+    };
  
     render() {
         return <App 
-            handleSubmit={this.handleSubmit} // catch values data
+            formSubmit={this.formSubmit} // catch values data
             userData={this.state} // throw back a object data
+            pickEmojis={this.pickEmojis}
         />
     }
 }

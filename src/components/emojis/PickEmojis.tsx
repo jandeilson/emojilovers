@@ -1,8 +1,27 @@
 import * as React from "react";
 
-export class PickEmojis extends React.Component<object, object> {
+type Props = {
+  emojis: [];
+  pickEmojis: (e: React.SyntheticEvent) => void;
+}
 
+export class PickEmojis extends React.Component<Props, object> {
     render() {
-      return <h1>TUDO CERTO ATÉ AQUI</h1>
+      return <>
+      {this.props.emojis.map((item: any, i: number) => {
+        return (
+        <div key={i} className="pick-emoji" data-id={item.id} onClick={this.props.pickEmojis}>
+          <div className="content">
+            <div className="description">
+              {item.descriptions.default}
+            </div>
+            <div className="circle">
+              <div className="emoji">{item.unicode}</div>
+            </div>
+          </div>
+        </div>
+      ) 
+      })}
+      </>
     }
 }
