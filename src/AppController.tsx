@@ -14,8 +14,8 @@ type States = {
     configs: {
         frame?: number;
         api?: {
-            emojisLoaded: boolean;
-            error?: any
+            emojisLoaded?: boolean;
+            error?: any;
         }
     }
     emojis: any[]
@@ -84,27 +84,31 @@ export class AppController extends React.Component<object, States> {
     };
 
     pickEmojis = (e: React.SyntheticEvent) => {
+
         e.preventDefault();
+       
+        let emojiId: number | undefined;
+        
+        const setState = (ids: any[]) => {
+            this.setState({
+                data: {
+                    emojis: {
+                        ids: ids
+                    }
+                }
+            });
+        }
 
         const id: string | null = e.currentTarget.getAttribute('data-id');
-
-        let emojiId;
-
-        if (id !== null) 
-        emojiId = parseInt(id);
+        
+        if (id !== null) emojiId = parseFloat(id);
         
         const userEmojis: any[] | undefined = this.state.data.emojis?.ids;
 
-        if (userEmojis !== undefined && userEmojis.includes(emojiId)) 
-        return
-
-        this.setState({
-            data: {
-                emojis: {
-                    ids: [...userEmojis || [], emojiId]
-                }
-            }
-        });
+        if (userEmojis !== undefined && emojiId !== undefined) 
+            [...userEmojis].includes(emojiId) ? setState([...userEmojis.filter(item => item !== emojiId)]) : setState([...userEmojis || [], emojiId])
+        else 
+            setState([...userEmojis || [], emojiId]);
     };
  
     render() {
