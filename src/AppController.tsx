@@ -3,11 +3,11 @@ import { App } from "./App";
 
 type States = {
     data: {
-        lovers?: {
+        lovers: {
             one: string;
             two: string;
         }
-        emojis?: {
+        emojis: {
             ids: any[];
         };
     },
@@ -70,17 +70,18 @@ export class AppController extends React.Component<object, States> {
             loverTwo: { value: string };
         };
   
-        this.setState({
+        this.setState(prevState => ({
             data: {
                 lovers: {
                     one: target.loverOne.value,
                     two: target.loverTwo.value 
-                }
+                },
+                emojis: prevState.data.emojis
             },
             configs: {
                 frame: 1
             }
-        });
+        }));
     };
 
     pickEmojis = (e: React.SyntheticEvent) => {
@@ -90,13 +91,14 @@ export class AppController extends React.Component<object, States> {
         let emojiId: number | undefined;
         
         const setState = (ids: any[]) => {
-            this.setState({
+            this.setState(prevState => ({
                 data: {
+                    lovers: prevState.data.lovers,
                     emojis: {
                         ids: ids
                     }
                 }
-            });
+            }));
         }
 
         const id: string | null = e.currentTarget.getAttribute('data-id');
@@ -106,7 +108,7 @@ export class AppController extends React.Component<object, States> {
         const userEmojis: any[] | undefined = this.state.data.emojis?.ids;
 
         if (userEmojis !== undefined && emojiId !== undefined) 
-            [...userEmojis].includes(emojiId) ? setState([...userEmojis.filter(item => item !== emojiId)]) : setState([...userEmojis || [], emojiId])
+            [...userEmojis].includes(emojiId) ? setState([...userEmojis.filter(id => id !== emojiId)]) : setState([...userEmojis || [], emojiId])
         else 
             setState([...userEmojis || [], emojiId]);
     };

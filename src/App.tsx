@@ -12,8 +12,8 @@ type Props = {
 
 export class App extends React.Component<Props, object> {
   
-  frames(f: number) {
-    switch(f) {
+  frame(n: number) {
+    switch(n) {
       case 1: // pick emojis frame
         return <PickEmojis emojis={this.props.userData.emojis} pickEmojis={this.props.pickEmojis}/>;
       default:
@@ -25,6 +25,6 @@ export class App extends React.Component<Props, object> {
   render() {
     const configs = this.props.userData.configs;
 
-    return this.frames(configs.frame)
+    return this.frame(configs.frame)
   }
 }
