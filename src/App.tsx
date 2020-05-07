@@ -7,24 +7,22 @@ import { PickEmojis } from "./components/emojis/PickEmojis";
 type Props = {
   userData: any;
   formSubmit: (e: React.SyntheticEvent) => void;
-  pickEmojis: (e: React.SyntheticEvent) => void;
+  pickedEmojis: (ids: any[]) => void;
 }
 
 export class App extends React.Component<Props, object> {
   
   frame(n: number) {
     switch(n) {
-      case 1: // pick emojis frame
-        return <PickEmojis emojis={this.props.userData.emojis} pickEmojis={this.props.pickEmojis}/>;
+      // Pick emojis frame
+      case 1: 
+        return <PickEmojis emojis={this.props.userData.emojis} pickedEmojis={this.props.pickedEmojis}/>;
       default:
        return <FormName formSubmit={this.props.formSubmit} />;
-      
     }
   }
 
   render() {
-    const configs = this.props.userData.configs;
-
-    return this.frame(configs.frame)
+    return this.frame(this.props.userData.configs.frame)
   }
 }

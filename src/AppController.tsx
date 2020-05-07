@@ -1,6 +1,10 @@
 import * as React from "react";
 import { App } from "./App";
 
+/* 
+All states here are fundamental for the app logic works, 
+I just figured out that this a good way to control important React states of all the app. 
+*/
 type States = {
     data: {
         lovers: {
@@ -21,7 +25,9 @@ type States = {
     emojis: any[]
 };
 
+
 export class AppController extends React.Component<object, States> {
+
     state: States = {
         data: {
             lovers: {
@@ -42,6 +48,7 @@ export class AppController extends React.Component<object, States> {
         emojis: []
     };
 
+    // Fetch emojis in the API
     componentDidMount() {
         fetch("http://localhost:4000/emojis")
           .then(res => res.json())
@@ -62,6 +69,7 @@ export class AppController extends React.Component<object, States> {
           )
     }
 
+    // TODO: throw this to form component
     formSubmit = (e: React.SyntheticEvent) => {
         e.preventDefault();
   
@@ -84,40 +92,21 @@ export class AppController extends React.Component<object, States> {
         }));
     };
 
-    pickEmojis = (e: React.SyntheticEvent) => {
-
-        e.preventDefault();
-       
-        let emojiId: number | undefined;
-        
-        const setState = (ids: any[]) => {
-            this.setState(prevState => ({
-                data: {
-                    lovers: prevState.data.lovers,
-                    emojis: {
-                        ids: ids
-                    }
-                }
-            }));
-        }
-
-        const id: string | null = e.currentTarget.getAttribute('data-id');
-        
-        if (id !== null) emojiId = parseFloat(id);
-        
-        const userEmojis: any[] | undefined = this.state.data.emojis?.ids;
-
-        if (userEmojis !== undefined && emojiId !== undefined) 
-            [...userEmojis].includes(emojiId) ? setState([...userEmojis.filter(id => id !== emojiId)]) : setState([...userEmojis || [], emojiId])
-        else 
-            setState([...userEmojis || [], emojiId]);
+    // Catch emoji ids from PickedEmojis component and set our controller data state
+    pickedEmojis = (ids: any[]) => {
+        this.setState(prevState => ({
+            data: {
+                lovers: { one: prevState.data.lovers.one, two: prevState.data.lovers.two },
+                emojis: { ids: ids } 
+            }
+        }));  
     };
- 
+
     render() {
         return <App 
-            formSubmit={this.formSubmit} // catch values data
-            userData={this.state} // throw back a object data
-            pickEmojis={this.pickEmojis}
+            formSubmit={this.formSubmit} // Get values data
+            userData={this.state} // Throw back this state data
+            pickedEmojis={this.pickedEmojis} // Get emoji ids
         />
     }
 }
