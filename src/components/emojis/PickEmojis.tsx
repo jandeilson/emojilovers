@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import { DefaultButton } from "../utils/DefaultButton";
 
 type Props = {
@@ -7,20 +7,16 @@ type Props = {
 }
 
 type States = {
-  data: {
-    emojis: {
-      ids: any[];
-    };
-  }
+  emojis: {
+    ids: any[];
+  };
 };
 
 export class PickEmojis extends React.Component<Props, States> {
 
   state: States = {
-    data: {
-      emojis: {
-        ids: []
-      }
+    emojis: {
+      ids: []
     }
   };
 
@@ -32,19 +28,17 @@ export class PickEmojis extends React.Component<Props, States> {
     
     const setState = (ids: any[]) => {
       this.setState({
-        data: {
-          emojis: {
-              ids: ids
-          }
+        emojis: {
+          ids: ids
         }
       });
-    }
+    };
 
     const id: string | null = e.currentTarget.getAttribute('data-id');
     
     if (id !== null) emojiId = parseFloat(id);
     
-    const userEmojis: any[] | undefined = this.state.data.emojis.ids;
+    const userEmojis: any[] | undefined = this.state.emojis.ids;
 
     if (userEmojis !== undefined && emojiId !== undefined) 
       [...userEmojis].includes(emojiId) ? setState([...userEmojis.filter(id => id !== emojiId)]) : setState([...userEmojis || [], emojiId])
@@ -54,7 +48,7 @@ export class PickEmojis extends React.Component<Props, States> {
 
     // Throw picked emojis for the AppController state data
     pickedEmojis = () => { 
-      this.props.pickedEmojis(this.state.data.emojis.ids);
+      this.props.pickedEmojis(this.state.emojis.ids);
     };
     
     render() {
@@ -76,5 +70,5 @@ export class PickEmojis extends React.Component<Props, States> {
 
       <DefaultButton handleClick={this.pickedEmojis} label="Start"></DefaultButton>
       </>
-    }
-}
+    };
+};
