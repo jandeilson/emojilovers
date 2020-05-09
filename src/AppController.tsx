@@ -54,10 +54,10 @@ export class AppController extends React.Component<object, States> {
       .then(res => res.json())
       .then(
         (result) => {
-          this.setState({
-            configs: { api: { emojisLoaded: true, } },
+          this.setState(prevState => ({
+            configs: { frame: prevState.configs.frame, api: { emojisLoaded: true, } },
             emojis: result
-          });
+          }));
         },
         (error) => {
           this.setState({ configs: { api: { emojisLoaded: true, error } } });

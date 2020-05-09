@@ -1,8 +1,11 @@
 import * as React from "react";
-import './App.sass';
+import './style.scss';
 
-import { FormName } from './components/lovers/FormName';
 import { PickEmojis } from "./components/emojis/PickEmojis";
+
+import { Default } from "./components/frames/Default";
+import { Footer } from "./components/layout/Footer";
+
 
 type Props = {
   userData: any;
@@ -18,11 +21,18 @@ export class App extends React.Component<Props, object> {
       case 1: 
         return <PickEmojis emojis={this.props.userData.emojis} pickedEmojis={this.props.pickedEmojis}/>;
       default:
-       return <FormName loversData={this.props.loversData} />;
+       return <Default loversData={this.props.loversData}></Default>;
     }
   }
 
   render() {
-    return this.frame(this.props.userData.configs.frame)
+    const frame = this.props.userData.configs.frame;
+
+    return <>
+    <section className="app">
+      {this.frame(frame)}
+    </section>
+    {!frame ? <Footer></Footer> : ''}
+    </>
   }
 }

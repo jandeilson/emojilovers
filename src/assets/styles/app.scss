@@ -1,0 +1,150 @@
+/************************
+  App
+************************/
+$text-shadow-default: 0px 2px 4px rgba(0, 0, 0, 0.25);
+$box-shadow-default: 0px 0px 10px rgba(0, 0, 0, 0.1);
+$border-radius-default: 8px;
+$transition-default: all 0.5s ease;
+
+$white-50: rgba(255, 255, 255, 0.50);
+$white-25: rgba(255, 255, 255, 0.25);
+
+// Fonts
+@font-face {
+    font-family: 'Lora';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../fonts/Lora/Lora-Regular.woff2') format('woff2');
+}
+
+// Headings
+
+.lovers {
+    h1 {
+        background-image: url('../images/logo.svg');
+        background-position: center center;
+        background-size: 100%;
+        background-repeat: no-repeat;
+        height: 128px;
+        width: 256px;
+        margin: 75px auto 0 auto;
+        text-indent: -999999px;
+    }
+    h4 {
+        font-family: 'Lora', serif;
+        font-size: 18px;
+        text-transform: lowercase;
+        text-shadow: $text-shadow-default;
+        margin: 25px auto;     
+    }
+}
+
+
+
+// Form
+
+form {
+   
+}
+
+// Inputs
+
+.field {
+    &:not(:last-child) {
+        margin-bottom: 1.25rem;
+    }
+
+    .control {
+        input {
+            background: #217060;
+            border: 1px solid #2C7768;
+            box-sizing: border-box;
+            box-shadow: $box-shadow-default;
+            border-radius: $border-radius-default;
+            color: $white;
+
+            &:hover {
+                border: 1px solid $white-25;
+                transition: $transition-default;
+            }
+            &:focus {
+                border: 1px solid $white-50;
+                transition: $transition-default;
+            }
+        }
+    }
+}
+
+// Buttons
+
+.is-primary {
+    &.default {
+        font-family: 'Lora', serif;
+        border-radius: $border-radius-default;
+        width: 100%;
+        border-width: 1px;
+        border-color: #674A67;
+        box-sizing: border-box;
+        box-shadow: $box-shadow-default;
+        text-transform: uppercase;
+        font-weight: bold;
+        letter-spacing: 1px;
+        height: 48px;
+        margin: 25px 0;
+
+        &:hover {
+            border: 1px solid $white-25;
+            transition: $transition-default;
+        }
+        &:focus {
+            border: 1px solid $white-50;
+            transition: $transition-default;
+        }
+    }
+}
+
+
+// Footer
+.footer {
+    background-color: #095C4B;
+    color: $white-50;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 0.5rem 0;  
+    font-size: 12px;
+
+    ul {
+        text-transform: lowercase;
+        font-family: 'Lora', serif;
+        display: block;
+        position: absolute;
+        top: -35px;
+        left: 0;
+        right: 0;
+        font-size: 16px;
+        
+
+        li {
+            display: inline-block;
+            color: #fff;
+            text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+        
+            &:after {
+                content: "\007C";
+                padding: 0 10px;
+            }
+        
+            &:last-child {
+                &:after {
+                    content: "";
+                    padding: 0;
+                }
+            }
+        }
+    }
+    
+}
+
+

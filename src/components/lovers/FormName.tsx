@@ -29,8 +29,16 @@ export class FormName extends React.Component<Props, object> {
   render() {
     return <>
     <form onSubmit={this.formSubmit}>
-      <input type="text" name="loverOne" />
-      <input type="text" name="loverTwo" />
+      <div className="field">
+        <div className="control">
+          <input type="text" className="input" name="loverOne" />
+        </div>
+      </div>
+      <div className="field">
+        <div className="control">
+          <input type="text" className="input" name="loverTwo" />
+        </div>
+      </div>
       <DefaultButton label="Continue"></DefaultButton>
     </form>
     </>

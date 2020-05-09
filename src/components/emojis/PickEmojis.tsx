@@ -9,7 +9,8 @@ type Props = {
 type States = {
   emojis: {
     ids: any[];
-  };
+  },
+  picked?: boolean;
 };
 
 export class PickEmojis extends React.Component<Props, States> {
@@ -40,10 +41,12 @@ export class PickEmojis extends React.Component<Props, States> {
     
     const userEmojis: any[] | undefined = this.state.emojis.ids;
 
-    if (userEmojis !== undefined && emojiId !== undefined) 
+    if (userEmojis !== undefined && emojiId !== undefined) {
       [...userEmojis].includes(emojiId) ? setState([...userEmojis.filter(id => id !== emojiId)]) : setState([...userEmojis || [], emojiId])
-    else 
+    } else {
       setState([...userEmojis || [], emojiId]);
+    }
+      
     };
 
     // Throw picked emojis for the AppController state data
@@ -53,22 +56,34 @@ export class PickEmojis extends React.Component<Props, States> {
     
     render() {
       return <>
-      {this.props.emojis.map((item: any, i: number) => {
-        return (
-        <div key={i} className="pick-emoji" data-id={item.id} onClick={this.pick}>
-          <div className="content">
-            <div className="description">
-              {item.descriptions.default}
-            </div>
-            <div className="circle">
-              <div className="emoji">{item.unicode}</div>
+      <section className="pick-emojis">
+        <div className="container is-fluid has-text-centered">
+          <h2>pick emojis you want!</h2>
+          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+        </div>
+
+        {this.props.emojis.map((item: any, i: number) => {
+          let position;
+
+          (i % 2 === 0) ? position = 'left': position = 'right';
+
+          return (
+          <div key={item.unicode} className={ `pick-emoji ${position} ${this.state.emojis.ids.includes(item.id) ? 'picked-' + position : ''}` } data-id={item.id} onClick={this.pick}>
+            <div className="content">
+              <div className="description">
+                <p>{item.descriptions.default}</p>
+              </div>
+              <div className="circle">
+                <div className="emoji">{item.unicode}</div>
+              </div>
             </div>
           </div>
-        </div>
-      ) 
-      })}
+          )})}
 
-      <DefaultButton handleClick={this.pickedEmojis} label="Start"></DefaultButton>
+        <div className="container is-fluid has-text-centered">
+          <DefaultButton handleClick={this.pickedEmojis} label="Start"></DefaultButton>
+        </div>
+      </section>
       </>
     };
 };

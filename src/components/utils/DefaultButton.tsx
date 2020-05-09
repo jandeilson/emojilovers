@@ -6,5 +6,5 @@ type Props = {
 }
 
 export const DefaultButton: React.FunctionComponent<Props> = (props) => {
-  return <button className="button is-primary" onClick={props.handleClick}>{props.label}</button>
+  return <button className="button is-primary default" onClick={props.handleClick}>{props.label}</button>
 }

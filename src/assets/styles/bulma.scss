@@ -1,6 +1,11 @@
-// Colors
+/************************
+  Bulma framework
+************************/
 $deep-sea-green: #0A6B58;
+$deep-sea-green-dark: #095C4B;
+
 $eggplant: #5F405F;
+$white: #FFFFFF;
 
 $family-sans-serif: 'Nunito', sans-serif;
 $primary: $eggplant;
@@ -9,16 +14,24 @@ $widescreen-enabled: false;
 $fullhd-enabled: false;
 
 $body-background-color: $deep-sea-green;
+$body-color: $white;
 $control-border-width: 2px;
 $input-border-color: transparent;
 $input-shadow: none;
 
 @import '../node_modules/bulma/sass/utilities/_all.sass';
+@import '../node_modules/bulma/sass/layout/_all.sass';
+@import '../node_modules/bulma/sass/form/_all.sass';
 @import '../node_modules/bulma/sass/base/_all.sass';
 @import '../node_modules/bulma/sass/elements/button.sass';
 @import '../node_modules/bulma/sass/elements/container.sass';
-@import '../node_modules/bulma/sass/elements/form.sass';
 @import '../node_modules/bulma/sass/elements/title.sass';
-@import '../node_modules/bulma/sass/components/navbar.sass';
-@import '../node_modules/bulma/sass/layout/hero.sass';
-@import '../node_modules/bulma/sass/layout/section.sass';
+
+
+// Hacks
+.container {
+  &.is-fluid {
+    padding-left: 64px;
+    padding-right: 64px;
+  }
+}
