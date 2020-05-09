@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { DefaultButton } from "../utils/DefaultButton";
+import { DefaultButton } from "../../utils/DefaultButton";
 
 type Props = {
   emojis: any[];
-  pickedEmojis: (ids: any[]) => void;
+  pickedEmojis: (data: object) => void;
 }
 
 type States = {
@@ -41,17 +41,17 @@ export class PickEmojis extends React.Component<Props, States> {
     
     const userEmojis: any[] | undefined = this.state.emojis.ids;
 
-    if (userEmojis !== undefined && emojiId !== undefined) {
-      [...userEmojis].includes(emojiId) ? setState([...userEmojis.filter(id => id !== emojiId)]) : setState([...userEmojis || [], emojiId])
-    } else {
+    if (userEmojis !== undefined && emojiId !== undefined)
+      [...userEmojis].includes(emojiId) ? 
+      setState([...userEmojis.filter(id => id !== emojiId)]) : 
+      setState([...userEmojis || [], emojiId])
+    else
       setState([...userEmojis || [], emojiId]);
-    }
-      
     };
 
     // Throw picked emojis for the AppController state data
     pickedEmojis = () => { 
-      this.props.pickedEmojis(this.state.emojis.ids);
+      this.props.pickedEmojis({ids: this.state.emojis.ids, frame: 2});
     };
     
     render() {
@@ -63,12 +63,14 @@ export class PickEmojis extends React.Component<Props, States> {
         </div>
 
         {this.props.emojis.map((item: any, i: number) => {
-          let position;
+          let position, picked;
+          
+          picked = this.state.emojis.ids.includes(item.id);
 
-          (i % 2 === 0) ? position = 'left': position = 'right';
+          (i % 2 === 0) ? position = 'left' : position = 'right';
 
           return (
-          <div key={item.unicode} className={ `pick-emoji ${position} ${this.state.emojis.ids.includes(item.id) ? 'picked-' + position : ''}` } data-id={item.id} onClick={this.pick}>
+          <div key={item.unicode} className={ `pick-emoji ${position} ${picked ? 'picked-' + position : 'unpicked'}` } data-id={item.id} onClick={this.pick}>
             <div className="content">
               <div className="description">
                 <p>{item.descriptions.default}</p>

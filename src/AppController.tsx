@@ -74,11 +74,14 @@ export class AppController extends React.Component<object, States> {
   };
 
   // Catch emoji ids of the PickedEmojis component and set our controller data state
-  pickedEmojis = (ids: any[]) => {
+  pickedEmojis = (data: any) => {
     this.setState(prevState => ({
       data: {
         lovers: { one: prevState.data.lovers.one, two: prevState.data.lovers.two },
-        emojis: { ids: ids } 
+        emojis: { ids: data.ids }
+      },
+      configs: {
+        frame: data.frame
       }
     }));  
   };

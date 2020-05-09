@@ -1,0 +1,99 @@
+$transition-pick-in: all 1s ease-in;
+$transition-pick-out: all 1s ease-out;
+
+.pick-emoji, .user-emoji {
+    background: $deep-sea-green-dark;
+    margin: 25px 0;
+    height: 64px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    position: relative;
+    width: 100%;
+    cursor: pointer;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+
+
+    .content {
+        .description {
+            font-size: 12px;
+            position: relative;
+
+            p {
+                position: absolute;
+                top: 20px;
+                height: 36px;
+            }
+
+            &:before {
+                content: "description";
+                font-family: 'Lora', serif;
+                font-weight: bold;
+                position: absolute;
+                color: rgba(10, 107, 88, 0.5);
+                font-size: 24px;
+                top: -10px;
+                transform: inherit;
+            }
+        }
+        .circle {
+            background: $deep-sea-green-dark;
+            height: 66px;
+            width: 66px;
+            border-radius: 100%;
+            position: absolute;
+            top: -2px;
+            font-size: 32px;
+            padding: 10px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+    }
+
+    &.left {
+        left: -20%;
+        transition: $transition-pick-in;
+
+        .content {
+            .description {
+
+                p {
+                    right: 50px;
+                }
+                
+                
+
+                &:before {
+                    left: 20%;
+                }
+            }
+            .circle {
+                right: -30px;
+                transform:  rotate(360deg);
+                transition: font-size 2s, transform 2s;
+            }
+        }
+    }
+    
+    &.right {
+        right: -20%;
+        transition: $transition-pick-in;
+
+        .content {
+            .description {
+
+                p {
+                    left: 50px;
+                }
+            
+
+                &:before {
+                    right: 20%;
+                }
+            }
+            .circle {
+                left: -30px;
+                transform:  rotate(-360deg);
+                transition: font-size 2s, transform 2s;
+            }
+        }
+    }
+}

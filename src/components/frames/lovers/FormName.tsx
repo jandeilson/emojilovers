@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DefaultButton } from "../utils/DefaultButton";
+import { DefaultButton } from "../../utils/DefaultButton";
 
 type Props = {
   loversData: (data: object) => void;

@@ -1,0 +1,56 @@
+.lobby-emojis {
+    .header {
+        background: $eggplant;
+        border-radius: 128px;
+        padding: 15px 25px;
+        height: 128px;
+        margin: 75px auto;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+
+        .content {
+            display: block;
+            position: relative;
+            
+            .hellolover {
+                text-transform: lowercase;
+                font-family: Lora, sans-serif;
+                position: absolute;
+                top: -36px;
+                font-size: 24px;
+                left: 0;
+                right: 0;
+                text-align: center;
+                font-weight: bold;
+            }
+
+            .emoji {
+                background: rgba(255, 255, 255, 0.75);
+                border-radius: 100%;
+                position: absolute;
+                width: 128px;
+                height: 128px;
+                font-size: 72px;
+                padding: 14px;
+                top: 10px;
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .quote {
+                float: right;
+                font-size: 11px;
+                padding: 12px 0 0 148px;
+                text-shadow: $text-shadow-1;
+            }
+        }
+    }
+
+    .all-user-emojis {
+        .content {
+            .circle {
+                background: $deep-sea-green-light;
+                transform: scale(1.2);
+            }
+        }
+    }
+
+}

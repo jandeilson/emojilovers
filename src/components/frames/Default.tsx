@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { FormName } from "../lovers/FormName";
+import { FormName } from "./lovers/FormName";
 
 type Props = {
   loversData: (ids: object) => void;

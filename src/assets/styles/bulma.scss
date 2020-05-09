@@ -2,6 +2,7 @@
   Bulma framework
 ************************/
 $deep-sea-green: #0A6B58;
+$deep-sea-green-light: #10866F;
 $deep-sea-green-dark: #095C4B;
 
 $eggplant: #5F405F;
@@ -29,9 +30,6 @@ $input-shadow: none;
 
 
 // Hacks
-.container {
-  &.is-fluid {
-    padding-left: 64px;
-    padding-right: 64px;
-  }
+strong {
+  color: $white
 }

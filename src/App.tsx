@@ -1,16 +1,16 @@
 import * as React from "react";
 import './style.scss';
 
-import { PickEmojis } from "./components/emojis/PickEmojis";
-
+import { PickEmojis } from "./components/frames/emojis/PickEmojis";
+import { LobbyEmojis } from "./components/frames/emojis/lobby/LobbyEmojis";
 import { Default } from "./components/frames/Default";
-import { Footer } from "./components/layout/Footer";
 
+import { Footer } from "./components/layout/Footer";
 
 type Props = {
   userData: any;
-  loversData: (ids: object) => void;
-  pickedEmojis: (ids: any[]) => void;
+  loversData: (data: object) => void;
+  pickedEmojis: (data: object) => void;
 }
 
 export class App extends React.Component<Props, object> {
@@ -20,6 +20,8 @@ export class App extends React.Component<Props, object> {
       // Pick emojis frame
       case 1: 
         return <PickEmojis emojis={this.props.userData.emojis} pickedEmojis={this.props.pickedEmojis}/>;
+      case 2:
+        return <LobbyEmojis userData={this.props.userData}></LobbyEmojis>
       default:
        return <Default loversData={this.props.loversData}></Default>;
     }
@@ -30,9 +32,9 @@ export class App extends React.Component<Props, object> {
 
     return <>
     <section className="app">
-      {this.frame(frame)}
+      {this.frame(frame) /*frame here*/} 
     </section>
-    {!frame ? <Footer></Footer> : ''}
+    {frame ? !frame: <Footer></Footer>}
     </>
   }
 }
