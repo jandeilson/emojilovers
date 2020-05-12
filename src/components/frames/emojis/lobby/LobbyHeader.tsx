@@ -34,7 +34,7 @@ export const LobbyHeader: React.FunctionComponent<Props> = (props) => {
       <div className="header">
         <div className="content">
           <div className="hellolover">Hello, {props.lover.one}</div>
-          <div className="emoji">{props.emoji.unicode}</div>
+          <div className="emoji"><span>{props.emoji.unicode}</span></div>
           <div className="quote">On a <strong>{date.weekday} {date.dayPeriod}</strong> it would be very interesting send a <em>"{props.emoji.name}"</em> emoji for {props.lover.two}</div>
         </div>
       </div>

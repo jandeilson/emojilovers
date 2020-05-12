@@ -76,7 +76,7 @@ export class PickEmojis extends React.Component<Props, States> {
                 <p>{item.descriptions.default}</p>
               </div>
               <div className="circle">
-                <div className="emoji">{item.unicode}</div>
+                <span className="emoji">{item.unicode}</span>
               </div>
             </div>
           </div>

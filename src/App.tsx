@@ -11,6 +11,7 @@ type Props = {
   userData: any;
   loversData: (data: object) => void;
   pickedEmojis: (data: object) => void;
+  loverPhone: (data: string) => void;
 }
 
 export class App extends React.Component<Props, object> {
@@ -21,7 +22,7 @@ export class App extends React.Component<Props, object> {
       case 1: 
         return <PickEmojis emojis={this.props.userData.emojis} pickedEmojis={this.props.pickedEmojis}/>;
       case 2:
-        return <LobbyEmojis userData={this.props.userData}></LobbyEmojis>
+        return <LobbyEmojis userData={this.props.userData} loverPhone={this.props.loverPhone}></LobbyEmojis>
       default:
        return <Default loversData={this.props.loversData}></Default>;
     }
@@ -34,7 +35,7 @@ export class App extends React.Component<Props, object> {
     <section className="app">
       {this.frame(frame) /*frame here*/} 
     </section>
-    {frame ? !frame: <Footer></Footer>}
+    {frame ? !frame : <Footer></Footer>}
     </>
   }
 }

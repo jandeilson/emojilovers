@@ -11,9 +11,10 @@ type States = {
       one: string;
       two: string;
     };
-    emojis?: {
+    emojis: {
       ids: any[];
     };
+    loverPhone?: string;
   },
   configs: {
     frame?: number;
@@ -67,10 +68,13 @@ export class AppController extends React.Component<object, States> {
 
   // Catch user and your lover name of the FormName component and set our controller data state
   loversData = (data: any) => {
-    this.setState({
-      data: { lovers: { one: data.lovers.one, two: data.lovers.two } },
+    this.setState(prevState => ({
+      data: { 
+        lovers: { one: data.lovers.one, two: data.lovers.two },
+        emojis: { ids: prevState.data.emojis.ids }
+      },
       configs: { frame: data.frame }
-    });
+    }));
   };
 
   // Catch emoji ids of the PickedEmojis component and set our controller data state
@@ -86,12 +90,27 @@ export class AppController extends React.Component<object, States> {
     }));  
   };
 
+  // Catch lover telphone of the LobbyEmojis component and set our controller data state
+  loverPhone = (phone: string) => {
+    this.setState(prevState => ({
+      data: {
+        lovers: { one: prevState.data.lovers.one, two: prevState.data.lovers.two },
+        emojis: { ids: prevState.data.emojis.ids },
+        loverPhone: phone
+      },
+      configs: {
+        frame: prevState.configs.frame
+      }
+    })); 
+  }
+
   render() {
     return <>
       <App 
         loversData={this.loversData} // Get values data
         userData={this.state} // Throw back this state data
         pickedEmojis={this.pickedEmojis} // Get emoji ids
+        loverPhone={this.loverPhone}
       />
     </>
   }

@@ -6,6 +6,7 @@ import '../../../../assets/styles/loverNumber.scss';
 
 type Props = {
   userData: any;
+  loverPhone: (data: string) => void;
 }
 
 type States = {
@@ -28,30 +29,37 @@ export class LobbyEmojis extends React.Component<Props, States> {
     };
 
     getEmoji = (e: any, unicode?: string, desc?: string) => {
-      this.setState({
-        showModal: !this.state.showModal,
-        pickedEmoji: `${unicode} ${desc}`
-      });
-      
-      fetch("http://localhost:4000/countryCodes")
-      .then(res => res.json())
-      .then(
-        (result) => {
-          this.setState(prevState => ({
-            showModal: prevState.showModal,
-            randomEmoji: prevState.randomEmoji,
-            pickedEmoji: prevState.pickedEmoji,
-            country: {
-              codes: result,
-              loaded: true
-            }
-          }));
-        },
-        (error) => {
-          this.setState({ country: { codes: error, loaded: false } });
-        }
-      )
+      if (this.state.userData?.phoneNumber !== undefined) {
+        this.setState({
+          pickedEmoji: `${unicode} ${desc}`
+        });
 
+        window.location.href = `https://wa.me/${this.state.userData.phoneNumber.replace(/\D/g,'')}?text=${this.state.pickedEmoji}`;
+      } else {
+        this.setState({
+          showModal: !this.state.showModal,
+          pickedEmoji: `${unicode} ${desc}`
+        });
+
+        fetch("http://localhost:4000/countryCodes")
+        .then(res => res.json())
+        .then(
+          (result) => {
+            this.setState(prevState => ({
+              showModal: prevState.showModal,
+              randomEmoji: prevState.randomEmoji,
+              pickedEmoji: prevState.pickedEmoji,
+              country: {
+                codes: result,
+                loaded: true
+              }
+            }));
+          },
+          (error) => {
+            this.setState({ country: { codes: error, loaded: false } });
+          }
+        );
+      }
     };
 
     userPhoneNumber = (e: React.SyntheticEvent) => {
@@ -73,10 +81,18 @@ export class LobbyEmojis extends React.Component<Props, States> {
       }));
       
       window.location.href = `https://wa.me/${phoneNumber.replace(/\D/g,'')}?text=${this.state.pickedEmoji}`;
+
+      this.props.loverPhone(phoneNumber);
+    }
+
+    closeModal = () => {
+      this.setState(prevState => ({
+        showModal: !this.state.showModal,
+        randomEmoji: prevState.randomEmoji
+      }));
     }
 
     componentDidMount() {
-
       const randomArr = this.props.userData.emojis.filter((emoji: any) => this.props.userData.data.emojis.ids.includes(emoji.id))
       const arrayKeys = Object.keys(randomArr);
       const randomEmoji = randomArr[Math.floor(Math.random() * arrayKeys.length << 0)]
@@ -85,7 +101,6 @@ export class LobbyEmojis extends React.Component<Props, States> {
         showModal: prevState.showModal,
         randomEmoji: randomEmoji
       }));
-
     };
 
     render() {
@@ -100,33 +115,36 @@ export class LobbyEmojis extends React.Component<Props, States> {
         <div className="container is-fluid">
           <LobbyHeader emoji={{name: this.state.randomEmoji.name, unicode: this.state.randomEmoji.unicode}} lover={{one: userData.lovers.one, two: userData.lovers.two}}></LobbyHeader>
         </div>
+        <h4>pick a emoji and have fun with {userData.lovers.two}</h4>
         <div className="all-user-emojis">{emojisData.filter((emoji: any) => userEmojis.includes(emoji.id)).map((emoji: any, i: number) => {
           let position: string;
 
           (i % 2 === 0) ? position = 'left' : position = 'right';
 
           return (
-          <div key={emoji.unicode} className={ `user-emoji ${position}` } data-id={emoji.id} >
-            <div className="content" onClick={(e) => this.getEmoji(e, emoji.unicode, emoji.descriptions.default)}>
+          <div key={emoji.unicode} className={ `user-emoji ${position}` } data-id={emoji.id} onClick={(e) => this.getEmoji(e, emoji.unicode, emoji.descriptions.default)}>
+            <div className="content">
               <div className="description">
                 <p>{emoji.descriptions.default}</p>
               </div>
               <div className="circle">
-                <div className="emoji">{emoji.unicode}</div>
+                <span className="emoji">{emoji.unicode}</span>
               </div>
             </div>
           </div>
           )})}
         </div>
+
+        <div className="line-bg"></div>
       </section>
 
-      <Modal modalTitle={`Which ${userData.lovers.two}'s phone?`} onClose={this.getEmoji} show={this.state.showModal}>
+      <Modal modalTitle={`Which ${userData.lovers.two}'s phone?`} onClose={this.closeModal} show={this.state.showModal}>
         <form onSubmit={this.userPhoneNumber} className="lover-number">
         <div className="field">
           <div className="control has-icons-left">
               <div className="select">
-                <select name="countryCode" className="select">
-                  <option selected>Country</option>
+                <select name="countryCode" className="select" required>
+                  <option selected disabled>Country</option>
                   {this.state.country?.codes.map((code: any, i: number) => {
                     return <option key={code.name} value={code.dial_code}>{code.name}</option>
                   })}
@@ -137,7 +155,7 @@ export class LobbyEmojis extends React.Component<Props, States> {
         </div>
         <div className="field">
           <div className="control">
-            <input type="text" placeholder="Phone" className="input" name="phone" />
+            <input type="text" placeholder="Phone" className="input" name="phone" required />
           </div>
         </div>
 

@@ -10,6 +10,13 @@ $transition-default: all 0.5s ease;
 $white-50: rgba(255, 255, 255, 0.50);
 $white-25: rgba(255, 255, 255, 0.25);
 
+body {
+    font-family: 'Roboto', sans-serif;
+}
+.app {
+    overflow-x: hidden;
+}
+
 // Fonts
 @font-face {
     font-family: 'Lora';
@@ -17,6 +24,14 @@ $white-25: rgba(255, 255, 255, 0.25);
     font-weight: 400;
     font-display: swap;
     src: url('../fonts/Lora/Lora-Regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../fonts/Roboto/Roboto-Regular.woff2') format('woff2');
 }
 
 // Headings
@@ -41,13 +56,6 @@ $white-25: rgba(255, 255, 255, 0.25);
     }
 }
 
-
-
-// Form
-
-form {
-   
-}
 
 // Inputs
 

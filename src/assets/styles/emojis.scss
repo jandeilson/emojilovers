@@ -10,6 +10,12 @@ $transition-pick-out: all 1s ease-out;
     width: 100%;
     cursor: pointer;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none; 
+     -khtml-user-select: none; 
+       -moz-user-select: none;
+        -ms-user-select: none; 
+            user-select: none;
 
 
     .content {
@@ -45,13 +51,20 @@ $transition-pick-out: all 1s ease-out;
             padding: 10px;
             border: 1px solid rgba(0, 0, 0, 0.1);
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            
+
+            .emoji {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
         }
     }
 
     &.left {
         left: -20%;
         transition: $transition-pick-in;
-
+        
         .content {
             .description {
 
@@ -59,8 +72,6 @@ $transition-pick-out: all 1s ease-out;
                     right: 50px;
                 }
                 
-                
-
                 &:before {
                     left: 20%;
                 }
@@ -76,15 +87,13 @@ $transition-pick-out: all 1s ease-out;
     &.right {
         right: -20%;
         transition: $transition-pick-in;
-
         .content {
             .description {
 
                 p {
                     left: 50px;
                 }
-            
-
+        
                 &:before {
                     right: 20%;
                 }
