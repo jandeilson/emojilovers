@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 const dateAbout = () => {
-  let date, weekday: any[], dayPeriods, currentTime;
+  let date, weekday: any[], dayPeriods, currentTime: number;
 
   date = new Date();
   currentTime = date.getHours();

@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
-const { emojis } = require('./data.js');
+const { emojis } = require('./static/emojis');
+const { countryCodes } = require('./static/countryCodes.js');
 
   
 // Allow cross-origin requests
@@ -10,8 +11,15 @@ app.use(function(req, res, next) {
   next();
 });
 
+
+// get all emojis data
 app.get("/emojis", (req, res) => {
   return res.json(emojis);
+});
+
+// get all country codes data
+app.get("/countryCodes", (req, res) => {
+  return res.json(countryCodes);
 });
 
 app.get("/emoji/:id", (req, res) => {

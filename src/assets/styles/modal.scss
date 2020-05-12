@@ -34,27 +34,31 @@
         offset-path: none;
         }
     }
-    h2 {
-        border-bottom: 1px solid #ccc;
-        padding: 1rem;
-        margin: 0;
-    }
     .content {
         padding: 1rem;
     }
-    .actions {
-        border-top: 1px solid #ccc;
-        background: #eee;
-        padding: 0.5rem 1rem;
-    }
-    
-    .actions button {
-        border: 0;
-        background: #78f89f;
-        border-radius: 5px;
-        padding: 0.5rem 1rem;
-        font-size: 0.8rem;
-        line-height: 1;
+    .header {
+        padding: 1rem;
+        border-bottom: 1px solid $deep-sea-green;
+        display: block;
+        height: 64px;
+
+        h2 {
+            float: left;
+            padding: 3px 0;
+        }
+
+        button {
+            float: right;
+            border: 0;
+            background: $deep-sea-green-light;
+            color: $white;
+            border-radius: 5px;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            line-height: 1;
+            cursor: pointer;
+        }
     }
     
     #centered-toggle-button {

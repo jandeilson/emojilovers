@@ -3,6 +3,7 @@ import * as React from 'react';
 type Props = {
   onClose: (e: React.MouseEvent<HTMLButtonElement>) => void;
   show: boolean;
+  modalTitle: string;
 }
 
 type States = {
@@ -22,13 +23,11 @@ export class Modal extends React.Component<Props, States> {
       
       return (
         <div className="modal" id="modal">
-          <h2>Modal Window</h2>
-          <div className="content">{this.props.children}</div>
-          <div className="actions">
-            <button className="toggle-button" onClick={this.onClose}>
-              close
-            </button>
+          <div className="header">
+          <h2>{this.props.modalTitle}</h2>
+          <button className="toggle-button" onClick={this.onClose}>x</button>
           </div>
+          <div className="content">{this.props.children}</div>
         </div>
       );
     };

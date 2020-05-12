@@ -55,15 +55,21 @@ form {
     &:not(:last-child) {
         margin-bottom: 1.25rem;
     }
+    
 
     .control {
-        input {
+        input, select {
             background: #217060;
             border: 1px solid #2C7768;
             box-sizing: border-box;
             box-shadow: $box-shadow-default;
             border-radius: $border-radius-default;
             color: $white;
+
+            &::placeholder { 
+                color: $white;
+                opacity: 0.5;
+            }
 
             &:hover {
                 border: 1px solid $white-25;
