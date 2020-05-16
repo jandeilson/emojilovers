@@ -29,12 +29,12 @@ export class LobbyEmojis extends React.Component<Props, States> {
     };
 
     getEmoji = (e: any, unicode?: string, desc?: string) => {
-      if (this.state.userData?.phoneNumber !== undefined) {
+      if (this.props.userData.data.loverPhone !== undefined) {
         this.setState({
           pickedEmoji: `${unicode} ${desc}`
         });
 
-        window.location.href = `https://wa.me/${this.state.userData.phoneNumber.replace(/\D/g,'')}?text=${this.state.pickedEmoji}`;
+        window.open(`https://wa.me/${this.props.userData.data.loverPhone.replace(/\D/g,'')}?text=${this.state.pickedEmoji}`, '_blank');
       } else {
         this.setState({
           showModal: !this.state.showModal,
@@ -79,8 +79,12 @@ export class LobbyEmojis extends React.Component<Props, States> {
           phoneNumber: phoneNumber
         }
       }));
+
+      fetch('http://localhost:4000/update/' + localStorage.getItem('userId'), this.fetchOptions({loverPhone: phoneNumber}, 'PUT'))
+        .then((res) => res.json())
+        
       
-      window.location.href = `https://wa.me/${phoneNumber.replace(/\D/g,'')}?text=${this.state.pickedEmoji}`;
+      window.open(`https://wa.me/${phoneNumber.replace(/\D/g,'')}?text=${this.state.pickedEmoji}`, '_blank');
 
       this.props.loverPhone(phoneNumber);
     }
@@ -92,7 +96,16 @@ export class LobbyEmojis extends React.Component<Props, States> {
       }));
     }
 
+    fetchOptions = (body: object, method: string) => {
+      return {
+        method: method,
+        headers: { 'Content-Type': 'application/json'},
+        body: JSON.stringify(body)
+      }
+    }
+
     componentDidMount() {
+
       const randomArr = this.props.userData.emojis.filter((emoji: any) => this.props.userData.data.emojis.ids.includes(emoji.id))
       const arrayKeys = Object.keys(randomArr);
       const randomEmoji = randomArr[Math.floor(Math.random() * arrayKeys.length << 0)]
@@ -101,6 +114,17 @@ export class LobbyEmojis extends React.Component<Props, States> {
         showModal: prevState.showModal,
         randomEmoji: randomEmoji
       }));
+
+
+      if (!localStorage.getItem('userId')) {
+        // save user data on database
+        fetch('http://localhost:4000/catch', this.fetchOptions({user: this.props.userData.data, configs: this.props.userData.configs}, 'POST'))
+          .then((res) => res.json())
+          .then((data) => {
+            localStorage.setItem('userId', data._id)
+          })
+          .catch((error) => console.log(error));
+      }
     };
 
     render() {

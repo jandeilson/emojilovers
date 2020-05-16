@@ -33,7 +33,7 @@ export class App extends React.Component<Props, object> {
 
     return <>
     <section className="app">
-      {this.frame(frame) /*frame here*/} 
+      {this.frame(frame)} 
     </section>
     {frame ? !frame : <Footer></Footer>}
     </>

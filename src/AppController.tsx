@@ -29,6 +29,8 @@ type States = {
 
 export class AppController extends React.Component<object, States> {
 
+  _isMounted = false;
+
   state: States = {
       data: {
         lovers: {
@@ -51,7 +53,10 @@ export class AppController extends React.Component<object, States> {
 
   // Fetch emojis in the API
   componentDidMount() {
-    fetch("http://localhost:4000/emojis")
+    this._isMounted = true;
+    const userId = localStorage.getItem('userId');
+
+    fetch('http://localhost:4000/emojis')
       .then(res => res.json())
       .then(
         (result) => {
@@ -64,7 +69,36 @@ export class AppController extends React.Component<object, States> {
           this.setState({ configs: { api: { emojisLoaded: true, error } } });
         }
       )
+
+      if (userId) {
+        fetch('http://localhost:4000/lover/' + localStorage.getItem('userId'))
+          .then(res => res.json())
+          .then(
+            (data) => {
+              if (this._isMounted) {
+                this.setState(prevState => ({
+                  data: {
+                    lovers: { one: data.user.lovers.one, two: data.user.lovers.two },
+                    emojis: { ids: data.user.emojis.ids },
+                    loverPhone: data.user.loverPhone
+                  },
+                  configs: { frame: data.configs.frame },
+                  emojis: prevState.emojis
+                }));
+              }
+            },
+            (error) => {
+              console.log(error);
+            }
+          )
+      }
+
+      
   };
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
 
   // Catch user and your lover name of the FormName component and set our controller data state
   loversData = (data: any) => {
