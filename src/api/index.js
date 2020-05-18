@@ -1,8 +1,11 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
-const { MongoClient, ObjectId } = require('mongodb');
+
+/** Back-end **/
+
 const app = express();
+const bodyParser = require('body-parser');
+const { MongoClient, ObjectId } = require('mongodb');
 
 // static jsons
 const { emojis } = require('./static/emojis');
@@ -108,6 +111,21 @@ MongoClient.connect(process.env.MONGODB_URI, {
   })
   .catch((error) => console.error(error));
 
-app.listen(process.env.PORT, () => {
-  console.log(`server listening on port ${process.env.PORT}`);
+app.listen(process.env.BACK_PORT, () => {
+  console.log(`back-end listening on port ${process.env.BACK_PORT}`);
+});
+
+/** Front-end **/
+const frontEnd = express();
+const path = require('path');
+
+frontEnd.use(express.static(__dirname));
+frontEnd.use(express.static(path.join(__dirname, '../../build')));
+
+frontEnd.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, '../../build', 'index.html'));
+});
+
+frontEnd.listen(process.env.FRONT_PORT, () => {
+  console.log(`front-end listening on port ${process.env.FRONT_PORT}`);
 });

@@ -55,8 +55,9 @@ export class AppController extends React.Component<object, States> {
   componentDidMount() {
     this._isMounted = true;
     const userId = localStorage.getItem('userId');
+    const APIUrl = 'http://localhost:4000';
 
-    fetch('http://localhost:4000/emojis')
+    fetch(APIUrl + '/emojis')
       .then(res => res.json())
       .then(
         (result) => {
@@ -71,7 +72,7 @@ export class AppController extends React.Component<object, States> {
       )
 
       if (userId) {
-        fetch('http://localhost:4000/lover/' + localStorage.getItem('userId'))
+        fetch(APIUrl + '/lover/' + localStorage.getItem('userId'))
           .then(res => res.json())
           .then(
             (data) => {
