@@ -7,6 +7,8 @@ import { Default } from './components/frames/Default';
 
 import { Footer } from './components/layout/Footer';
 
+import { A2HSButton } from './components/utils/A2HSButton';
+
 type Props = {
   userData: any;
   loversData: (data: object) => void;
@@ -32,10 +34,10 @@ export class App extends React.Component<Props, object> {
   render() {
     const frame = this.props.userData.configs.frame;
 
-    return <>
+    return <> 
     <section className="app">
       {this.frame(frame)} 
-      <button className="add-button">Add to home screen</button>
+      <A2HSButton></A2HSButton>
     </section>
     {frame ? !frame : <Footer></Footer>}
     </>
