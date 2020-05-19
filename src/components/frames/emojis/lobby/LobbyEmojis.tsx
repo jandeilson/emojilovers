@@ -34,7 +34,10 @@ export class LobbyEmojis extends React.Component<Props, States> {
           pickedEmoji: `${unicode} ${desc}`
         });
 
-        window.open(`https://wa.me/${this.props.userData.data.loverPhone.replace(/\D/g,'')}?text=${this.state.pickedEmoji}`, '_blank');
+        setTimeout(() => {
+          window.open(`https://wa.me/${this.props.userData.data.loverPhone.replace(/\D/g,'')}?text=${this.state.pickedEmoji}`, '_blank');
+        }, 2000);
+
       } else {
         this.setState({
           showModal: !this.state.showModal,
@@ -81,10 +84,12 @@ export class LobbyEmojis extends React.Component<Props, States> {
       }));
 
       fetch(this.props.userData.configs.api.url + '/user/update/' + localStorage.getItem('userId'), this.fetchOptions({loverPhone: phoneNumber}, 'PUT'))
-        .then((res) => res.json())
+        .then((res) => res.json());
         
       
-      window.open(`https://wa.me/${phoneNumber.replace(/\D/g,'')}?text=${this.state.pickedEmoji}`, '_blank');
+      setTimeout(() => {
+        window.open(`https://wa.me/${phoneNumber.replace(/\D/g,'')}?text=${this.state.pickedEmoji}`, '_blank');
+      }, 1000);
 
       this.props.loverPhone(phoneNumber);
     }
@@ -141,12 +146,15 @@ export class LobbyEmojis extends React.Component<Props, States> {
         </div>
         <h4>pick a emoji and have fun with {userData.lovers.two}</h4>
         <div className="all-user-emojis">{emojisData.filter((emoji: any) => userEmojis.includes(emoji.id)).map((emoji: any, i: number) => {
-          let position: string;
+          let position: string, picked;
+
+          if (this.state.pickedEmoji !== undefined)
+          picked = this.state.pickedEmoji.includes(`${emoji.unicode} ${emoji.descriptions.default}`);
 
           (i % 2 === 0) ? position = 'left' : position = 'right';
 
           return (
-          <div key={emoji.unicode} className={ `user-emoji ${position}` } data-id={emoji.id} onClick={(e) => this.getEmoji(e, emoji.unicode, emoji.descriptions.default)}>
+          <div key={emoji.unicode} className={ `user-emoji ${position} ${picked ? 'picked' : 'unpicked'}` } data-id={emoji.id} onClick={(e) => this.getEmoji(e, emoji.unicode, emoji.descriptions.default)}>
             <div className="content">
               <div className="description">
                 <p>{emoji.descriptions.default}</p>

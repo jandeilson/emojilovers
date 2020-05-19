@@ -1,11 +1,11 @@
-import * as React from "react";
+import * as React from 'react';
 import './style.scss';
 
-import { PickEmojis } from "./components/frames/emojis/PickEmojis";
-import { LobbyEmojis } from "./components/frames/emojis/lobby/LobbyEmojis";
-import { Default } from "./components/frames/Default";
+import { PickEmojis } from './components/frames/emojis/PickEmojis';
+import { LobbyEmojis } from './components/frames/emojis/lobby/LobbyEmojis';
+import { Default } from './components/frames/Default';
 
-import { Footer } from "./components/layout/Footer";
+import { Footer } from './components/layout/Footer';
 
 type Props = {
   userData: any;
@@ -14,8 +14,9 @@ type Props = {
   loverPhone: (data: string) => void;
 }
 
+
 export class App extends React.Component<Props, object> {
-  
+
   frame(n: number) {
     switch(n) {
       // Pick emojis frame
@@ -34,6 +35,7 @@ export class App extends React.Component<Props, object> {
     return <>
     <section className="app">
       {this.frame(frame)} 
+      <button className="add-button">Add to home screen</button>
     </section>
     {frame ? !frame : <Footer></Footer>}
     </>

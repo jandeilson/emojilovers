@@ -72,16 +72,45 @@
 
         .user-emoji {
             &.left {
+                &.picked {
+                    background: $deep-sea-green-light;
+
+                    .content {
+                        .circle {
+                            border-radius: 25%;
+                            transition: $transition-pick-in;
+                            transform: scale(1.3);
+
+                            span {
+                                animation: rotation 1s linear;
+                            }
+                        }
+                        
+                    }
+                }
                 &:hover, &:focus, &:active {
                     background: $deep-sea-green-light;
-                    transform: skewX(-10deg);
                 }
             }
         
             &.right {
+                &.picked {
+                    background: $deep-sea-green-light;
+
+                    .content {
+                        .circle {
+                            border-radius: 25%;
+                            transition: $transition-pick-in;
+                            transform: scale(1.3);
+
+                            span {
+                                animation: rotation 1s linear;
+                            }
+                        }
+                    }
+                }
                 &:hover, &:focus, &:active {
                     background: $deep-sea-green-light;
-                    transform: skewX(10deg);
                 }
             }
         }
@@ -107,4 +136,13 @@
         border-radius: 30px;
         z-index: -1;
     }
+
+    @keyframes rotation {
+		from {
+			transform: rotate(0deg);
+		}
+		to {
+			transform: rotate(359deg);
+		}
+}
 }

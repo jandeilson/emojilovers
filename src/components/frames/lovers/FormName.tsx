@@ -31,12 +31,12 @@ export class FormName extends React.Component<Props, object> {
     <form onSubmit={this.formSubmit}>
       <div className="field">
         <div className="control">
-          <input type="text" className="input" name="loverOne" />
+          <input type="text" className="input" placeholder="Your name" name="loverOne" />
         </div>
       </div>
       <div className="field">
         <div className="control">
-          <input type="text" className="input" name="loverTwo" />
+          <input type="text" className="input" placeholder="Lover name" name="loverTwo" />
         </div>
       </div>
       <DefaultButton label="Continue"></DefaultButton>

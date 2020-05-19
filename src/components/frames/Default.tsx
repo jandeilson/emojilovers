@@ -12,7 +12,7 @@ export const Default: React.FunctionComponent<Props> = (props) => {
     <section className="lovers">
       <div className="container is-fluid has-text-centered">
           <h1>EmojiLovers</h1>
-          <h4>What lovers first name?</h4>
+          <h4>What lovers names?</h4>
           <FormName loversData={props.loversData} />
       </div>
     </section>

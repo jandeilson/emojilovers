@@ -54,6 +54,21 @@ body {
         text-shadow: $text-shadow-default;
         margin: 25px auto;     
     }
+
+    .field {
+        .control {
+            input {
+                text-align: center;
+
+                &:focus {
+                    &::placeholder {
+                        color: transparent;
+                    }
+                }
+            }
+            
+        }
+    }
 }
 
 
