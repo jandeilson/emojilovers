@@ -132,6 +132,6 @@ app.all('*', function (req, res) {
 });
 
 // Start
-app.listen(process.env.BACK_PORT, () => {
-  console.log(`back-end listening on port ${process.env.BACK_PORT}`);
+app.listen(process.env.PORT, () => {
+  console.log(`back-end listening on port ${process.env.PORT}`);
 });
