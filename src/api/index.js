@@ -1,10 +1,11 @@
 const express = require('express');
+const router = express.Router();
 const dotenv = require('dotenv');
-
-/** Back-end **/
-
+const path = require('path');
 const app = express();
 const bodyParser = require('body-parser');
+
+/** Back-end **/
 const { MongoClient, ObjectId } = require('mongodb');
 
 // static jsons
@@ -31,19 +32,23 @@ app.use(function (req, res, next) {
   next();
 });
 
-// get all emojis data
-app.get('/emojis', (req, res) => {
+// Middleware to use for all requests
+router.use((req, res, next) => {
+  next();
+});
+
+router.get('/', function (req, res) {
+  res.json({ message: 'EmojiLovers API' });
+});
+
+// Get all emojis
+router.route('/emojis').get((req, res) => {
   return res.json(emojis);
 });
 
-// get all country codes data
-app.get('/countryCodes', (req, res) => {
-  return res.json(countryCodes);
-});
-
-app.get('/emoji/:id', (req, res) => {
-  // To prevent the ID '0' we'll simply subtract by one. This way we can query for id = 2 which will serve us 1, etc.
-  const id = req.params.id - 1;
+// Get emoji by id
+router.route('/emoji/:id').get((req, res) => {
+  const id = req.params.id;
 
   if (!emojis[id]) {
     return res.status(404).json({ error: 'Emoji not found' });
@@ -52,7 +57,11 @@ app.get('/emoji/:id', (req, res) => {
   return res.json(emojis[id]);
 });
 
-// mongodb connect
+// Get all country codes
+router.route('/countryCodes').get((req, res) => {
+  return res.json(countryCodes);
+});
+
 MongoClient.connect(process.env.MONGODB_URI, {
   useUnifiedTopology: true,
 })
@@ -61,8 +70,8 @@ MongoClient.connect(process.env.MONGODB_URI, {
     const db = client.db('users');
     const usersCollection = db.collection('data');
 
-    // catch user data and save mongodb database
-    app.post('/catch', (req, res) => {
+    // Catch user data and save mongodb database
+    router.route('/user/catch').post((req, res) => {
       usersCollection
         .insertOne(req.body)
         .then((result) => {
@@ -73,8 +82,8 @@ MongoClient.connect(process.env.MONGODB_URI, {
         });
     });
 
-    // update user data and save mongodb database
-    app.put('/update/:id', (req, res) => {
+    // Update user data and save mongodb database
+    router.route('/user/update/:id').put((req, res) => {
       const id = req.params.id;
 
       usersCollection
@@ -96,7 +105,7 @@ MongoClient.connect(process.env.MONGODB_URI, {
       res.end();
     });
 
-    app.get('/lover/:id', (req, res) => {
+    router.route('/user/:id').get((req, res) => {
       const id = req.params.id;
 
       usersCollection
@@ -111,21 +120,18 @@ MongoClient.connect(process.env.MONGODB_URI, {
   })
   .catch((error) => console.error(error));
 
-app.listen(process.env.BACK_PORT, () => {
-  console.log(`back-end listening on port ${process.env.BACK_PORT}`);
-});
+// Routes will be prefixed with /api
+app.use('/api', router);
 
 /** Front-end **/
-const frontEnd = express();
-const path = require('path');
+app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname, '../../build')));
 
-frontEnd.use(express.static(__dirname));
-frontEnd.use(express.static(path.join(__dirname, '../../build')));
-
-frontEnd.get('/*', function (req, res) {
+app.all('*', function (req, res) {
   res.sendFile(path.join(__dirname, '../../build', 'index.html'));
 });
 
-frontEnd.listen(process.env.FRONT_PORT, () => {
-  console.log(`front-end listening on port ${process.env.FRONT_PORT}`);
+// Start
+app.listen(process.env.BACK_PORT, () => {
+  console.log(`back-end listening on port ${process.env.BACK_PORT}`);
 });

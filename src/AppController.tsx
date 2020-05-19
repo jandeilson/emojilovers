@@ -18,7 +18,8 @@ type States = {
   },
   configs: {
     frame?: number;
-    api?: {
+    api: {
+      url: string;
       emojisLoaded?: boolean;
       error?: any;
     };
@@ -44,6 +45,7 @@ export class AppController extends React.Component<object, States> {
       configs: {
         frame: 0, // lovers name frame
         api: {
+          url: 'http://localhost:4000/api', //window.location.href
           emojisLoaded: false,
           error: null,
         }
@@ -55,24 +57,23 @@ export class AppController extends React.Component<object, States> {
   componentDidMount() {
     this._isMounted = true;
     const userId = localStorage.getItem('userId');
-    const APIUrl = 'http://localhost:4000';
 
-    fetch(APIUrl + '/emojis')
+    fetch(this.state.configs.api.url + '/emojis')
       .then(res => res.json())
       .then(
         (result) => {
           this.setState(prevState => ({
-            configs: { frame: prevState.configs.frame, api: { emojisLoaded: true, } },
+            configs: { frame: prevState.configs.frame, api: { emojisLoaded: true, url: prevState.configs.api.url } },
             emojis: result
           }));
         },
         (error) => {
-          this.setState({ configs: { api: { emojisLoaded: true, error } } });
+          this.setState({ configs: { api: { emojisLoaded: false, url: this.state.configs.api.url } } });
         }
       )
 
       if (userId) {
-        fetch(APIUrl + '/lover/' + localStorage.getItem('userId'))
+        fetch(this.state.configs.api.url + '/user/' + localStorage.getItem('userId'))
           .then(res => res.json())
           .then(
             (data) => {
@@ -83,7 +84,7 @@ export class AppController extends React.Component<object, States> {
                     emojis: { ids: data.user.emojis.ids },
                     loverPhone: data.user.loverPhone
                   },
-                  configs: { frame: data.configs.frame },
+                  configs: { frame: data.configs.frame, api: { url: prevState.configs.api.url } },
                   emojis: prevState.emojis
                 }));
               }
@@ -108,7 +109,7 @@ export class AppController extends React.Component<object, States> {
         lovers: { one: data.lovers.one, two: data.lovers.two },
         emojis: { ids: prevState.data.emojis.ids }
       },
-      configs: { frame: data.frame }
+      configs: { frame: data.frame, api: { url: prevState.configs.api.url }}
     }));
   };
 
@@ -119,9 +120,7 @@ export class AppController extends React.Component<object, States> {
         lovers: { one: prevState.data.lovers.one, two: prevState.data.lovers.two },
         emojis: { ids: data.ids }
       },
-      configs: {
-        frame: data.frame
-      }
+      configs: { frame: data.frame, api: { url: prevState.configs.api.url } }
     }));  
   };
 
@@ -133,9 +132,7 @@ export class AppController extends React.Component<object, States> {
         emojis: { ids: prevState.data.emojis.ids },
         loverPhone: phone
       },
-      configs: {
-        frame: prevState.configs.frame
-      }
+      configs: { frame: prevState.configs.frame, api: { url: prevState.configs.api.url } }
     })); 
   }
 

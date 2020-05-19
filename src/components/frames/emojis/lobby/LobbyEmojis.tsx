@@ -41,7 +41,7 @@ export class LobbyEmojis extends React.Component<Props, States> {
           pickedEmoji: `${unicode} ${desc}`
         });
 
-        fetch("http://localhost:4000/countryCodes")
+        fetch('http://localhost:4000/api/countryCodes')
         .then(res => res.json())
         .then(
           (result) => {
@@ -80,7 +80,7 @@ export class LobbyEmojis extends React.Component<Props, States> {
         }
       }));
 
-      fetch('http://localhost:4000/update/' + localStorage.getItem('userId'), this.fetchOptions({loverPhone: phoneNumber}, 'PUT'))
+      fetch('http://localhost:4000/api/user/update/' + localStorage.getItem('userId'), this.fetchOptions({loverPhone: phoneNumber}, 'PUT'))
         .then((res) => res.json())
         
       
@@ -118,7 +118,7 @@ export class LobbyEmojis extends React.Component<Props, States> {
 
       if (!localStorage.getItem('userId')) {
         // save user data on database
-        fetch('http://localhost:4000/catch', this.fetchOptions({user: this.props.userData.data, configs: this.props.userData.configs}, 'POST'))
+        fetch('http://localhost:4000/api/user/catch', this.fetchOptions({user: this.props.userData.data, configs: this.props.userData.configs}, 'POST'))
           .then((res) => res.json())
           .then((data) => {
             localStorage.setItem('userId', data._id)
