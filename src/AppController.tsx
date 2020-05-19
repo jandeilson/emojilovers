@@ -45,7 +45,7 @@ export class AppController extends React.Component<object, States> {
       configs: {
         frame: 0, // lovers name frame
         api: {
-          url: 'http://localhost:4000/api', //window.location.href
+          url: 'https://emojilovers.herokuapp.com/api',
           emojisLoaded: false,
           error: null,
         }
