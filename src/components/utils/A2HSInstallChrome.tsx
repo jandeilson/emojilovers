@@ -1,7 +1,7 @@
 import * as React from "react";
-import { A2HSPrompt } from "./hooks/A2HSPrompt";
+import { A2HSPrompt } from "./hooks/A2HSChrome";
 
-export function A2HSButton() {
+export const A2HSButton: React.FunctionComponent<{}> = () => {
   const [prompt, promptToInstall] = A2HSPrompt();
   const [isVisible, setVisibleState] = React.useState(false);
 

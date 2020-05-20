@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { useIsIOS } from './hooks/iOSUser';
+import { useIsIOS } from './hooks/A2HSIOS';
 
-export const InstallIOSPWA: React.FunctionComponent<{}> = () => {
+export const A2HSInstallIOS: React.FunctionComponent<{}> = () => {
 
   const { prompt } = useIsIOS();
   
