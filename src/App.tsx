@@ -7,7 +7,8 @@ import { Default } from './components/frames/Default';
 
 import { Footer } from './components/layout/Footer';
 
-import { A2HSButton } from './components/utils/A2HSButton';
+import { InstallIOSPWA } from './components/utils/InstallIOSPWA';
+
 
 type Props = {
   userData: any;
@@ -16,9 +17,8 @@ type Props = {
   loverPhone: (data: string) => void;
 }
 
-
 export class App extends React.Component<Props, object> {
-
+  
   frame(n: number) {
     switch(n) {
       // Pick emojis frame
@@ -33,11 +33,11 @@ export class App extends React.Component<Props, object> {
 
   render() {
     const frame = this.props.userData.configs.frame;
-
+    
     return <> 
+    {<InstallIOSPWA />}
     <section className="app">
       {this.frame(frame)} 
-      <A2HSButton></A2HSButton>
     </section>
     {frame ? !frame : <Footer></Footer>}
     </>
