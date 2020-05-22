@@ -123,7 +123,7 @@ export class LobbyEmojis extends React.Component<Props, States> {
 
       if (!localStorage.getItem('userId')) {
         // save user data on database
-        fetch(this.props.userData.configs.api.url + '/user/catch', this.fetchOptions({user: this.props.userData.data, configs: this.props.userData.configs}, 'POST'))
+        fetch(this.props.userData.configs.api.url + '/user/catch', this.fetchOptions({user: this.props.userData.data, configs: {frame: 0}}, 'POST'))
           .then((res) => res.json())
           .then((data) => {
             localStorage.setItem('userId', data._id)
@@ -187,7 +187,7 @@ export class LobbyEmojis extends React.Component<Props, States> {
         </div>
         <div className="field">
           <div className="control">
-            <input type="text" placeholder="Phone" className="input" name="phone" required />
+            <input type="text" placeholder="Phone" className="input" name="phone" pattern="\d*" required />
           </div>
         </div>
 

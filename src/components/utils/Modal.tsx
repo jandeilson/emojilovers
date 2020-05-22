@@ -6,13 +6,9 @@ type Props = {
   modalTitle: string;
 }
 
-type States = {
+export class Modal extends React.Component<Props, {}> {
 
-}
-
-export class Modal extends React.Component<Props, States> {
-
-    onClose = (e:React.MouseEvent<HTMLButtonElement>) => {
+    onClose = (e: React.MouseEvent<HTMLButtonElement>) => {
       this.props.onClose && this.props.onClose(e);
     };
 
@@ -22,12 +18,16 @@ export class Modal extends React.Component<Props, States> {
       }
       
       return (
-        <div className="modal" id="modal">
-          <div className="header">
-          <h2>{this.props.modalTitle}</h2>
-          <button className="toggle-button" onClick={this.onClose}>x</button>
+        <div className="blackdrop-modal">
+          <div className="modal" id="modal">
+            <div className="header">
+              <h2>{this.props.modalTitle}</h2>
+              <button className="toggle-button" onClick={this.onClose}>x</button>
+            </div>
+            <div className="content">
+              {this.props.children}
+              </div>
           </div>
-          <div className="content">{this.props.children}</div>
         </div>
       );
     };

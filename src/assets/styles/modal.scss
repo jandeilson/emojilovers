@@ -1,8 +1,17 @@
+.blackdrop-modal {
+    background: rgba(9, 92, 75, 0.98);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
 .modal {
     width: 300px;
     background: rgb(9, 92, 75);
     transition: 1.1s ease-out;
-    box-shadow: -2rem 2rem 2rem rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 2rem 20px rgba(0, 0, 0, 0.2);
     filter: blur(0);
     opacity: 1;
     visibility: visible;
@@ -12,6 +21,8 @@
     right: 0;
     top: 50%;
     transform: translateY(-50%);
+    z-index: 1;
+    border-radius: 8px;
   
  
     &.off {

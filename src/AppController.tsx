@@ -20,6 +20,7 @@ type States = {
     frame?: number;
     api: {
       url: string;
+      userId: string | null;
       emojisLoaded?: boolean;
       error?: any;
     };
@@ -32,95 +33,117 @@ export class AppController extends React.Component<object, States> {
 
   _isMounted = false;
 
+  userId = localStorage.getItem('userId');
+
   state: States = {
       data: {
-        lovers: {
-          one: '',
-          two: ''
-        },
-        emojis: {
-          ids: []
-        }
+        lovers: { one: '', two: '' },
+        emojis: { ids: [] }
       },
       configs: {
-        frame: 0, // lovers name frame
-        api: {
-          url: 'https://emojilovers.herokuapp.com/api',
-          emojisLoaded: false,
-          error: null,
-        }
+        frame: 0, // default frame
+        api: { url: 'https://emojilovers.herokuapp.com/api', userId: this.userId, emojisLoaded: false, error: null, }
       },
       emojis: []
   };
 
+
+  // Get user from api
+  getUser() {
+    fetch(this.state.configs.api.url + '/user/' + this.state.configs.api.userId)
+      .then(res => res.json())
+      .then(
+        (data) => {
+          if (data.error === 'User not found.') {
+            alert('User not found.');
+
+            this.setState(prevState => ({
+              configs: { frame: 0, api: prevState.configs.api },
+              emojis: prevState.emojis
+            }));
+          } else {
+            if (this._isMounted) {
+              this.setState(prevState => ({
+                data: {
+                  lovers: { one: data.user.lovers.one, two: data.user.lovers.two },
+                  emojis: { ids: data.user.emojis.ids },
+                  loverPhone: data.user.loverPhone
+                },
+                configs: { frame: data.configs.frame, api: prevState.configs.api },
+                emojis: prevState.emojis
+              }));
+            }
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      )
+  }
+
   // Fetch emojis in the API
   componentDidMount() {
     this._isMounted = true;
-    const userId = localStorage.getItem('userId');
 
     fetch(this.state.configs.api.url + '/emojis')
       .then(res => res.json())
       .then(
         (result) => {
           this.setState(prevState => ({
-            configs: { frame: prevState.configs.frame, api: { emojisLoaded: true, url: prevState.configs.api.url } },
+            configs: { frame: prevState.configs.frame, api: { userId: this.userId, emojisLoaded: true, url: prevState.configs.api.url } },
             emojis: result
           }));
         },
         (error) => {
-          this.setState({ configs: { api: { emojisLoaded: false, url: this.state.configs.api.url } } });
+          this.setState({ configs: { api: { userId: this.userId, emojisLoaded: false, url: this.state.configs.api.url } } });
         }
       )
 
-      if (userId) {
-        fetch(this.state.configs.api.url + '/user/' + localStorage.getItem('userId'))
-          .then(res => res.json())
-          .then(
-            (data) => {
-              if (this._isMounted) {
-                this.setState(prevState => ({
-                  data: {
-                    lovers: { one: data.user.lovers.one, two: data.user.lovers.two },
-                    emojis: { ids: data.user.emojis.ids },
-                    loverPhone: data.user.loverPhone
-                  },
-                  configs: { frame: data.configs.frame, api: { url: prevState.configs.api.url } },
-                  emojis: prevState.emojis
-                }));
-              }
-            },
-            (error) => {
-              console.log(error);
-            }
-          )
-      }
+      if (this.state.configs.api.userId) 
+      this.getUser();
+  };
 
-      
+  componentDidUpdate(prevProps: any, prevState: any) {
+    if(this.state.configs.api.userId !== prevState.configs.api.userId) {
+      this.getUser();
+    }
   };
 
   componentWillUnmount() {
     this._isMounted = false;
-  }
+  };
 
   // Catch user and your lover name of the FormName component and set our controller data state
   loversData = (data: any) => {
-    this.setState(prevState => ({
-      data: { 
-        lovers: { one: data.lovers.one, two: data.lovers.two },
-        emojis: { ids: prevState.data.emojis.ids }
-      },
-      configs: { frame: data.frame, api: { url: prevState.configs.api.url }}
-    }));
+    if (data.frame !== 2) { 
+      // user registration
+      this.setState(prevState => ({
+        data: { 
+          lovers: {one: data.lovers.one, two: data.lovers.two},
+          emojis: prevState.data.emojis
+        },
+        configs: { frame: data.frame, api: prevState.configs.api }
+      }));
+    } else { 
+      // user registered
+      this.setState(prevState => ({
+        data: { 
+          lovers: prevState.data.lovers,
+          emojis: prevState.data.emojis
+        },
+        configs: { frame: data.frame, api: { userId: data.userId, url: prevState.configs.api.url } }
+      }));
+    }
   };
 
   // Catch emoji ids of the PickedEmojis component and set our controller data state
   pickedEmojis = (data: any) => {
     this.setState(prevState => ({
       data: {
-        lovers: { one: prevState.data.lovers.one, two: prevState.data.lovers.two },
+        lovers: prevState.data.lovers,
         emojis: { ids: data.ids }
       },
-      configs: { frame: data.frame, api: { url: prevState.configs.api.url } }
+      configs: { frame: data.frame, api: prevState.configs.api }
     }));  
   };
 
@@ -128,11 +151,11 @@ export class AppController extends React.Component<object, States> {
   loverPhone = (phone: string) => {
     this.setState(prevState => ({
       data: {
-        lovers: { one: prevState.data.lovers.one, two: prevState.data.lovers.two },
-        emojis: { ids: prevState.data.emojis.ids },
+        lovers: prevState.data.lovers,
+        emojis: prevState.data.emojis,
         loverPhone: phone
       },
-      configs: { frame: prevState.configs.frame, api: { url: prevState.configs.api.url } }
+      configs: prevState.configs
     })); 
   }
 
