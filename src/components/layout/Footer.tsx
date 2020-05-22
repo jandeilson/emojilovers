@@ -10,7 +10,7 @@ export const Footer: React.FunctionComponent<{}> = () => {
     <footer className="footer">
       <div className="content has-text-centered">
         <ul>
-          <li><a href="#" onClick={() => modal(!about)}>About</a></li>
+          <li><button onClick={() => modal(!about)}>About</button></li>
           <li>Feedback</li>
           <li>Privacy</li>
         </ul>
