@@ -36,7 +36,7 @@ export class LobbyEmojis extends React.Component<Props, States> {
 
         setTimeout(() => {
           const urlData = `https://wa.me/${this.props.userData.data.loverPhone.replace(/\D/g,'')}?text=${this.state.pickedEmoji}`;
-          window.open(urlData, '_blank');
+          window.open(urlData, '_blank') ||  window.location.assign(urlData);
         }, 2000);
 
       } else {
@@ -67,6 +67,8 @@ export class LobbyEmojis extends React.Component<Props, States> {
     };
 
     userPhoneNumber = (e: React.SyntheticEvent) => {
+
+      e.preventDefault();
     
       const target = e.target as typeof e.target & {
         countryCode: { value: string };
@@ -74,6 +76,8 @@ export class LobbyEmojis extends React.Component<Props, States> {
       };
 
       const phoneNumber = `${target.countryCode.value} ${target.phone.value}`;
+
+      this.props.loverPhone(phoneNumber);
 
       this.setState(prevState => ({
         showModal: !this.state.showModal,
@@ -86,13 +90,10 @@ export class LobbyEmojis extends React.Component<Props, States> {
       fetch(this.props.userData.configs.api.url + '/user/update/' + localStorage.getItem('userId'), this.fetchOptions({loverPhone: phoneNumber}, 'PUT'))
         .then((res) => res.json())
 
-      // throw back lover phone to controller
-      this.props.loverPhone(phoneNumber);
-
       setTimeout(() => {
         const urlData = `https://wa.me/${phoneNumber.replace(/\D/g,'')}?text=${this.state.pickedEmoji}`;
-        window.open(urlData, '_blank');
-      }, 1000);
+        window.open(urlData, '_blank') || window.location.assign(urlData);
+      }, 2000);
     }
 
     closeModal = () => {
