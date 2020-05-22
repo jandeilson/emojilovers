@@ -6,13 +6,14 @@ type States = {
 }
 
 type Props = {
+  userData: any;
   loversData: (data: object) => void;
 };
 
 export class FormName extends React.Component<Props, States> {
 
   state: States = {
-    userId: localStorage.getItem('userId')
+    userId: this.props.userData.configs.api.userId
   }
 
   formSubmit = (e: React.SyntheticEvent) => {
@@ -39,11 +40,17 @@ export class FormName extends React.Component<Props, States> {
   }
 
   handleUserClick = () => {
-    if (this.state.userId !== null)
-    localStorage.setItem('userId', this.state.userId);
+    const userFound = this.props.userData.configs.api.error;
 
-    // TODO recognize if user not found
-    this.props.loversData({userId: this.state.userId, frame: 2});
+    if (this.state.userId !== null) localStorage.setItem('userId', this.state.userId);
+
+    //TODO need fix bug
+    if (userFound === undefined) {
+      this.props.loversData({userId: this.state.userId, frame: 2, error: userFound});
+    } else {
+      this.props.loversData({userId: this.state.userId, frame: 0, error: userFound});
+    }
+
   }
 
   user() {
@@ -53,6 +60,7 @@ export class FormName extends React.Component<Props, States> {
         <div className="field">
           <div className="control">
             <input type="text" className="input" value={this.state.userId?.toString()} onChange={this.handleUser}  />
+            <div className="has-text-centered">{this.props.userData.configs.api.error === 'User not found.' ? 'User not found.' : ''}</div>
           </div>
         </div>
         <DefaultButton label="Enter your lobby" handleClick={this.handleUserClick}></DefaultButton>

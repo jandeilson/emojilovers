@@ -16,8 +16,6 @@ function checkForIOS() {
   const webkit = !!ua.match(/WebKit/i);
   const isSafari = isIOS && webkit && !ua.match(/CriOS/i);
 
-  console.log('return: ' + days)
-
   const prompt = (isNaN(days) || days > 0) && isIOS;
 
   if (prompt && 'localStorage' in window) {

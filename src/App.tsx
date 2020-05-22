@@ -29,7 +29,7 @@ export class App extends React.Component<Props, object> {
       case 2:
         return <LobbyEmojis userData={this.props.userData} loverPhone={this.props.loverPhone}></LobbyEmojis>
       default:
-       return <Default loversData={this.props.loversData}></Default>;
+       return <Default userData={this.props.userData} loversData={this.props.loversData} ></Default>;
     }
   }
 

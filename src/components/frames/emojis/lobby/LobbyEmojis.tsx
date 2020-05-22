@@ -67,8 +67,7 @@ export class LobbyEmojis extends React.Component<Props, States> {
     };
 
     userPhoneNumber = (e: React.SyntheticEvent) => {
-      e.preventDefault();
-      
+    
       const target = e.target as typeof e.target & {
         countryCode: { value: string };
         phone: { value: string }
@@ -85,15 +84,15 @@ export class LobbyEmojis extends React.Component<Props, States> {
       }));
 
       fetch(this.props.userData.configs.api.url + '/user/update/' + localStorage.getItem('userId'), this.fetchOptions({loverPhone: phoneNumber}, 'PUT'))
-        .then((res) => res.json());
-        
-      
+        .then((res) => res.json())
+
+      // throw back lover phone to controller
+      this.props.loverPhone(phoneNumber);
+
       setTimeout(() => {
         const urlData = `https://wa.me/${phoneNumber.replace(/\D/g,'')}?text=${this.state.pickedEmoji}`;
         window.open(urlData, '_blank') || window.location.assign(urlData);
       }, 1000);
-
-      this.props.loverPhone(phoneNumber);
     }
 
     closeModal = () => {

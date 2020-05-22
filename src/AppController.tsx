@@ -32,7 +32,6 @@ type States = {
 export class AppController extends React.Component<object, States> {
 
   _isMounted = false;
-
   userId = localStorage.getItem('userId');
 
   state: States = {
@@ -42,7 +41,7 @@ export class AppController extends React.Component<object, States> {
       },
       configs: {
         frame: 0, // default frame
-        api: { url: 'https://emojilovers.herokuapp.com/api', userId: this.userId, emojisLoaded: false, error: null, }
+        api: { url: 'https://emojilovers.herokuapp.com/api', userId: this.userId !== undefined ? this.userId : null, emojisLoaded: false, error: null, }
       },
       emojis: []
   };
@@ -55,10 +54,8 @@ export class AppController extends React.Component<object, States> {
       .then(
         (data) => {
           if (data.error === 'User not found.') {
-            alert('User not found.');
-
             this.setState(prevState => ({
-              configs: { frame: 0, api: prevState.configs.api },
+              configs: { frame: 0, api: { url: prevState.configs.api.url, userId: prevState.configs.api.userId, error: data.error } },
               emojis: prevState.emojis
             }));
           } else {
@@ -69,7 +66,7 @@ export class AppController extends React.Component<object, States> {
                   emojis: { ids: data.user.emojis.ids },
                   loverPhone: data.user.loverPhone
                 },
-                configs: { frame: data.configs.frame, api: prevState.configs.api },
+                configs: { frame: data.configs.frame, api: { url: prevState.configs.api.url, userId: prevState.configs.api.userId, error: data.error } },
                 emojis: prevState.emojis
               }));
             }
@@ -85,22 +82,25 @@ export class AppController extends React.Component<object, States> {
   componentDidMount() {
     this._isMounted = true;
 
+
+    // Get all emojis
     fetch(this.state.configs.api.url + '/emojis')
       .then(res => res.json())
       .then(
         (result) => {
           this.setState(prevState => ({
-            configs: { frame: prevState.configs.frame, api: { userId: this.userId, emojisLoaded: true, url: prevState.configs.api.url } },
+            configs: { frame: prevState.configs.frame, api: { userId: prevState.configs.api.userId, emojisLoaded: true, url: prevState.configs.api.url } },
             emojis: result
           }));
         },
         (error) => {
-          this.setState({ configs: { api: { userId: this.userId, emojisLoaded: false, url: this.state.configs.api.url } } });
+          this.setState({ configs: { api: { userId: null, emojisLoaded: false, url: this.state.configs.api.url } } });
         }
       )
 
-      if (this.state.configs.api.userId) 
-      this.getUser();
+      if(this.state.configs.api.userId !== null) {
+        this.getUser();
+      }
   };
 
   componentDidUpdate(prevProps: any, prevState: any) {
@@ -115,23 +115,17 @@ export class AppController extends React.Component<object, States> {
 
   // Catch user and your lover name of the FormName component and set our controller data state
   loversData = (data: any) => {
-    if (data.frame !== 2) { 
+    if (this.state.configs.api.userId === null) { 
       // user registration
       this.setState(prevState => ({
-        data: { 
-          lovers: {one: data.lovers.one, two: data.lovers.two},
-          emojis: prevState.data.emojis
-        },
+        data: { lovers: { one: data.lovers.one, two: data.lovers.two }, emojis: prevState.data.emojis },
         configs: { frame: data.frame, api: prevState.configs.api }
       }));
     } else { 
       // user registered
       this.setState(prevState => ({
-        data: { 
-          lovers: prevState.data.lovers,
-          emojis: prevState.data.emojis
-        },
-        configs: { frame: data.frame, api: { userId: data.userId, url: prevState.configs.api.url } }
+        data: { lovers: prevState.data.lovers, emojis: prevState.data.emojis },
+        configs: { frame: data.frame, api: { userId: data.userId, url: prevState.configs.api.url, error: data.error } }
       }));
     }
   };
