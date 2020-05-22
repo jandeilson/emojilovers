@@ -1,12 +1,31 @@
-## EmojiLovers
+![EmojiLovers](https://raw.githubusercontent.com/jandeilson/emojilovers/master/src/assets/images/promo/banner.png)
 
-EmojiLovers é um PWA protótipo sobre emojis, diálogos inusitados entre amantes e é isso. O projeto foi inicialmente idealizado para eu me divertir com a minha namorada, mas gostamos tanto da ideia que resolvemos que seria interessante chamar mais pessoas para participar da brincadeira.
+# About EmojiLovers
+EmojiLovers is a small prototype PWA about emojis, unusual dialogues between lovers and... that's it, I guess... The project was initially designed for me to have fun with my girlfriend, but we liked the idea so much that we decided it would be very interesting to call more people to join the game and have fun.
 
-Como funciona
+![EmojiLovers](https://raw.githubusercontent.com/jandeilson/emojilovers/master/src/assets/images/promo/ui-prototype.png)
 
-Basicamente você diz seu nome e do seu amante, escolhe emojis conhecidos com diálogos personalizados por mim e minha namorada, e compartilha esses emojis e seus diálogos com seu amante. Você também pode colocar o número do WhatsApp do seu amante e automáticamente o emoji com seu diálogo será formatado e enviado para o seu amante. Legal, né?
+This is minimalist prototype, I did it to be able to practive some development knowledge. I like the idea of other people helping to grow the project, so if you want to help, feel free, it's a open source.
 
-Desenvolvimento
+Hope you have fun!
 
-Esse é um protótipo bem minimalista, fiz para poder práticar alguns conhecimentos de desenvolvimento. Gosto da ideia de outras pessoas ajudarem a crescer o projeto, então se você quiser ajudar, sinta-se livre, o projeto é de código aberto.
+[PLAY NOW!](https://emojilovers.herokuapp.com/)
 
+## How it works
+Basically you say your and your lover name, select emojis with personalized dialogues by my girlfriend and me, and share those emojis and their dialogues with your lover. You can also put your love's WhatsApp number and automatically share emoji witth dialogue formatted to sent to your lover. Cool huh?
+
+## Installation
+I will talk more about it soon, but you can already venture out.
+
+## Usage
+I will talk more about it soon, but you can already venture out.
+
+## Bonus
+I created the whole look of the project on my own in [Figma](https://www.figma.com/file/2vyt6pHhiTTDgyzJHYVnDY/EmojiLovers?node-id=24%3A732). If you're interested.
+
+## Thanks
+Priscila, my honey. <3
+And friends who tested it.
+
+## License
+This project is licensed under the terms of the [MIT license](https://github.com/jandeilson/WhoMadeThatCoffee/blob/master/LICENSE).
