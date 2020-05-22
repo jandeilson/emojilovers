@@ -21,7 +21,7 @@ I will talk more about it soon, but you can already venture out.
 I will talk more about it soon, but you can already venture out.
 
 ## Bonus
-I created the whole look of the project on my own in [Figma](https://www.figma.com/file/2vyt6pHhiTTDgyzJHYVnDY/EmojiLovers?node-id=24%3A732). If you're interested.
+I created the whole look of the project on my own in [Figma](https://www.figma.com/file/2vyt6pHhiTTDgyzJHYVnDY/EmojiLovers). If you're interested.
 
 ## Thanks
 Priscila, my honey. <3
