@@ -35,7 +35,8 @@ export class LobbyEmojis extends React.Component<Props, States> {
         });
 
         setTimeout(() => {
-          window.open(`https://wa.me/${this.props.userData.data.loverPhone.replace(/\D/g,'')}?text=${this.state.pickedEmoji}`, '_blank');
+          const urlData = `https://wa.me/${this.props.userData.data.loverPhone.replace(/\D/g,'')}?text=${this.state.pickedEmoji}`;
+          window.open(urlData, '_blank') ||  window.location.replace(urlData);
         }, 2000);
 
       } else {
@@ -88,7 +89,8 @@ export class LobbyEmojis extends React.Component<Props, States> {
         
       
       setTimeout(() => {
-        window.open(`https://wa.me/${phoneNumber.replace(/\D/g,'')}?text=${this.state.pickedEmoji}`, '_blank');
+        const urlData = `https://wa.me/${phoneNumber.replace(/\D/g,'')}?text=${this.state.pickedEmoji}`;
+        window.open(urlData, '_blank') || window.location.replace(urlData);
       }, 1000);
 
       this.props.loverPhone(phoneNumber);
