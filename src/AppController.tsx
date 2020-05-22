@@ -41,7 +41,7 @@ export class AppController extends React.Component<object, States> {
       },
       configs: {
         frame: 0, // default frame
-        api: { url: 'http://localhost:3000/api', userId: this.userId !== undefined ? this.userId : null, emojisLoaded: false, error: null, }
+        api: { url: 'https://emojilovers.herokuapp.com/api', userId: this.userId !== undefined ? this.userId : null, emojisLoaded: false, error: null, }
       },
       emojis: []
   };
