@@ -36,7 +36,7 @@ export class LobbyEmojis extends React.Component<Props, States> {
 
         setTimeout(() => {
           const urlData = `https://wa.me/${this.props.userData.data.loverPhone.replace(/\D/g,'')}?text=${this.state.pickedEmoji}`;
-          window.open(urlData, '_blank');
+          window.open(urlData, '_blank') ||  window.location.assign(urlData);
         }, 2000);
 
       } else {
@@ -91,7 +91,7 @@ export class LobbyEmojis extends React.Component<Props, States> {
 
       setTimeout(() => {
         const urlData = `https://wa.me/${phoneNumber.replace(/\D/g,'')}?text=${this.state.pickedEmoji}`;
-        window.open(urlData, '_blank');
+        window.open(urlData, '_blank') || window.location.assign(urlData);
       }, 1000);
     }
 
