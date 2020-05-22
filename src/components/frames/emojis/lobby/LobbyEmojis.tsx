@@ -29,8 +29,6 @@ export class LobbyEmojis extends React.Component<Props, States> {
     };
 
     getEmoji = (e: any, unicode?: string, desc?: string) => {
-
-      console.log(this.props.userData.data.loverPhone)
       if (this.props.userData.data.loverPhone !== undefined) {
         this.setState({
           pickedEmoji: `${unicode} ${desc}`
@@ -38,7 +36,7 @@ export class LobbyEmojis extends React.Component<Props, States> {
 
         setTimeout(() => {
           const urlData = `https://wa.me/${this.props.userData.data.loverPhone.replace(/\D/g,'')}?text=${this.state.pickedEmoji}`;
-          window.open(urlData, '_blank') ||  window.location.assign(urlData);
+          window.open(urlData, '_blank');
         }, 2000);
 
       } else {
@@ -93,7 +91,7 @@ export class LobbyEmojis extends React.Component<Props, States> {
 
       setTimeout(() => {
         const urlData = `https://wa.me/${phoneNumber.replace(/\D/g,'')}?text=${this.state.pickedEmoji}`;
-        window.open(urlData, '_blank') || window.location.assign(urlData);
+        window.open(urlData, '_blank');
       }, 1000);
     }
 

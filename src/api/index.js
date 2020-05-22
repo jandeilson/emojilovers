@@ -131,5 +131,5 @@ app.all('*', function (req, res) {
 
 // Start
 app.listen(process.env.PORT, () => {
-  console.log(`back-end listening on port ${process.env.PORT}`);
+  console.log(`App listening on port ${process.env.PORT}`);
 });
