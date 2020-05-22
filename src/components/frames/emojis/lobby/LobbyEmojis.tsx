@@ -111,8 +111,7 @@ export class LobbyEmojis extends React.Component<Props, States> {
       }
     }
 
-    componentDidMount() {
-
+    componentWillMount() {
       const randomArr = this.props.userData.emojis.filter((emoji: any) => this.props.userData.data.emojis.ids.includes(emoji.id))
       const arrayKeys = Object.keys(randomArr);
       const randomEmoji = randomArr[Math.floor(Math.random() * arrayKeys.length << 0)]
