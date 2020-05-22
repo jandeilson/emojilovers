@@ -111,7 +111,7 @@ export class LobbyEmojis extends React.Component<Props, States> {
       }
     }
 
-    componentWillMount() {
+    componentDidMount() {
       const randomArr = this.props.userData.emojis.filter((emoji: any) => this.props.userData.data.emojis.ids.includes(emoji.id))
       const arrayKeys = Object.keys(randomArr);
       const randomEmoji = randomArr[Math.floor(Math.random() * arrayKeys.length << 0)]
@@ -140,6 +140,10 @@ export class LobbyEmojis extends React.Component<Props, States> {
       emojisData = this.props.userData.emojis;
       userEmojis = this.props.userData.data.emojis.ids;
       
+      if (!this.state.randomEmoji) {
+        return <div />
+      }
+
       return <>
       <section className="lobby-emojis">
         <div className="container is-fluid">
