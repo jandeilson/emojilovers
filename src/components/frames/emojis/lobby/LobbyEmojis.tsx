@@ -29,6 +29,8 @@ export class LobbyEmojis extends React.Component<Props, States> {
     };
 
     getEmoji = (e: any, unicode?: string, desc?: string) => {
+
+      console.log(this.props.userData.data.loverPhone)
       if (this.props.userData.data.loverPhone !== undefined) {
         this.setState({
           pickedEmoji: `${unicode} ${desc}`
@@ -188,7 +190,7 @@ export class LobbyEmojis extends React.Component<Props, States> {
         </div>
         <div className="field">
           <div className="control">
-            <input type="text" placeholder="Phone" className="input" name="phone" pattern="\d*" required />
+            <input type="number" placeholder="Phone" className="input" name="phone" pattern="\d*" required />
           </div>
         </div>
 

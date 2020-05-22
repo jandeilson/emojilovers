@@ -41,11 +41,10 @@ export class AppController extends React.Component<object, States> {
       },
       configs: {
         frame: 0, // default frame
-        api: { url: 'https://emojilovers.herokuapp.com/api', userId: this.userId !== undefined ? this.userId : null, emojisLoaded: false, error: null, }
+        api: { url: 'http://localhost:3000/api', userId: this.userId !== undefined ? this.userId : null, emojisLoaded: false, error: null, }
       },
       emojis: []
   };
-
 
   // Get user from api
   getUser() {
@@ -118,13 +117,13 @@ export class AppController extends React.Component<object, States> {
     if (this.state.configs.api.userId === null) { 
       // user registration
       this.setState(prevState => ({
-        data: { lovers: { one: data.lovers.one, two: data.lovers.two }, emojis: prevState.data.emojis },
+        data: { lovers: { one: data.lovers.one, two: data.lovers.two }, emojis: prevState.data.emojis, loverPhone: prevState.data.loverPhone },
         configs: { frame: data.frame, api: prevState.configs.api }
       }));
     } else { 
       // user registered
       this.setState(prevState => ({
-        data: { lovers: prevState.data.lovers, emojis: prevState.data.emojis },
+        data: { lovers: prevState.data.lovers, emojis: prevState.data.emojis, loverPhone: prevState.data.loverPhone },
         configs: { frame: data.frame, api: { userId: data.userId, url: prevState.configs.api.url, error: data.error } }
       }));
     }

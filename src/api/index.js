@@ -101,8 +101,6 @@ MongoClient.connect(process.env.MONGODB_URI, {
         .catch((error) => {
           return res.json({ error: error });
         });
-
-      res.end();
     });
 
     router.route('/user/:id').get((req, res) => {
