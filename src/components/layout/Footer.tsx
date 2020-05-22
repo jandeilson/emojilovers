@@ -1,17 +1,28 @@
-import * as React from "react";
+import * as React from 'react';
+import { Modal } from '../utils/Modal';
+import pkcg from '../../../package.json'
 
 export const Footer: React.FunctionComponent<{}> = () => {
+
+    const [about, modal] = React.useState(true);
+
     return <>
     <footer className="footer">
       <div className="content has-text-centered">
         <ul>
-          <li>About</li>
+          <li><a href="#" onClick={() => modal(!about)}>About</a></li>
           <li>Feedback</li>
           <li>Privacy</li>
         </ul>
       
       made with love for my honey
       </div>
-  </footer>
+    </footer>
+
+    <Modal modalTitle="About EmojiLovers" onClose={() => modal(!about)} show={!about}>
+      <p>Version: {pkcg.version}</p>
+      <p>More about soon.</p>
+      <p>Thanks for testing! :)</p>
+    </Modal>
   </>
 }
